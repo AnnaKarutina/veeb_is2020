@@ -1,8 +1,10 @@
 <?php
 require_once '../app/bootstrap.php';
 
-$anna = new Client('Anna', 'Karutina', 39, 'silver');
+$init = new Core();
 
 echo '<pre>';
-print_r($anna);
+print_r($init);
 echo '</pre>';
+
+
