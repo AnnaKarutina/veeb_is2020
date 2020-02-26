@@ -27,6 +27,18 @@ class Users extends Controller
       if(empty($data['name'])){
         $data['name_err'] = 'Please enter the name';
       }
+      // validate email
+      if(empty($data['email'])){
+        $data['email_err'] = 'Please enter the email';
+      }
+      // validate password
+      if(empty($data['pass'])){
+        $data['pass_err'] = 'Please enter the password';
+      }
+      // validate password confirmation
+      if(empty($data['pass2'])){
+        $data['pass2_err'] = 'Please enter the confirm password';
+      }
       echo '<pre>';
       print_r($data);
       echo '</pre>';
