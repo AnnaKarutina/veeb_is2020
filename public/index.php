@@ -14,8 +14,13 @@ $db = new Database();
 //$db->bind(':email', 'anna@host.loc');
 //$db->bind(':pass', 'qwerty');
 //$db->execute();
+$sql = 'SELECT * FROM users WHERE id=:id';
+$db->query($sql);
+$db->bind(':id', 1);
+$db->execute();
+$data = $db->rowCount();
 echo '<pre>';
-print_r($db);
+print_r($data);
 echo '</pre>';
 
 
