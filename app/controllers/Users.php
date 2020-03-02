@@ -8,7 +8,35 @@ class Users extends Controller
   }
 
   public function login(){
-    $this->view('users/login');
+    // check post request
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+      // process form
+      $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+      // init data
+      $data = array(
+        'email' => trim($_POST['email']),
+        'pass' => trim($_POST['pass']),
+        'email_err' => '',
+        'pass_err' => ''
+      );
+      // validate email
+      if(empty($data['email'])){
+        $data['email_err'] = 'Please enter the email';
+      }
+      // validate password
+      if(empty($data['pass'])){
+        $data['pass_err'] = 'Please enter the password';
+      }
+      // if errors are empty - login user
+      if(empty($data['email_err']) and empty($data['pass_err']) ){
+        echo 'login in';
+      } else {
+        // load view with errors
+        $this->view('users/login', $data);
+      }
+    } else {
+      $this->view('users/login');
+    }
   }
 
   public function register(){
@@ -51,6 +79,9 @@ class Users extends Controller
       }
       // if errors are empty - register user
       if(empty($data['name_err']) and empty($data['email_err']) and empty($data['pass_err']) and empty($data['pass2_err'])){
+        // hash password
+        $data['pass'] = password_hash($data['pass'], PASSWORD_DEFAULT);
+        // register user
         if($this->userModel->register($data)){
           header('Location: '.URLROOT.'/users/login');
         } else {
