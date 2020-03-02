@@ -22,6 +22,8 @@ class Users extends Controller
       // validate email
       if(empty($data['email'])){
         $data['email_err'] = 'Please enter the email';
+      } else if(!$this->userModel->findUserByEmail($data['email'])){
+        $data['email_err'] = 'No user found';
       }
       // validate password
       if(empty($data['pass'])){
@@ -29,7 +31,16 @@ class Users extends Controller
       }
       // if errors are empty - login user
       if(empty($data['email_err']) and empty($data['pass_err']) ){
-        echo 'login in';
+        // set log in
+        $loggedInUser = $this->userModel->login($data['email'], $data['pass']);
+        if(!$loggedInUser){
+          $data['pass_err'] = 'Password is incorrect';
+          $this->view('users/login', $data);
+        } else {
+          echo '<pre>';
+          print_r($loggedInUser);
+          echo '</pre>';
+        }
       } else {
         // load view with errors
         $this->view('users/login', $data);
