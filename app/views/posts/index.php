@@ -1,12 +1,19 @@
 <?php require_once APPROOT.'/views/inc/header.php';?>
 <?php flashShow('post_message');?>
 <?php if(isset($_SESSION['user_id'])) :?>
-  <a href="<?php echo URLROOT?>/posts/add" class="btn btn-info">Add Post</a>
+  <div class="row mb-3">
+    <div class="col">
+      <a href="<?php echo URLROOT?>/posts/add" class="btn btn-info">Add Post</a>
+    </div>
+  </div>
 <?php endif;?>
 <div class="row mb-3">
   <div class="col">
     <h1>Posts</h1>
   </div>
+</div>
+<div class="row mb-3">
+  <div class="col">
   <?php foreach ($data as $post):?>
     <div class="card card-body mb-3">
       <h4 class="card-title"><?php echo $post->title;?></h4>
